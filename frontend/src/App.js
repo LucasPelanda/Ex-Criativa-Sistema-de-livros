@@ -7,46 +7,45 @@ import ModalAdicionar from "./components/ModalAdicionar";
 import ModalDetalhes from "./components/ModalDetalhes";
 import ModalEditar from "./components/ModalEditar";
 
-
 function App() {
   const [livros, setLivros] = useState([]);
   const [erro, setErro] = useState("");
   const [modalAberto, setModalAberto] = useState(null);
   const [livroSelecionado, setLivroSelecionado] = useState(null);
 
-  const fetchLivros = async () => {
+  async function buscarLivros() {
     try {
-      const res = await axios.get(`http://localhost:8800/livros`);
+      var res = await axios.get("http://localhost:8800/livros");
       setLivros(res.data);
       setErro("");
     } catch (err) {
       setErro("Erro ao carregar livros.");
     }
-  };
+  }
 
-  useEffect(() => {
-    fetchLivros();
+  useEffect(function() {
+    buscarLivros();
   }, []);
 
-  const handleClickCard = (livro) => {
+  function clicarCard(livro) {
     setLivroSelecionado(livro);
     setModalAberto("detalhes");
-  };
+  }
 
-  const handleClickEditar = (livro) => {
+  function clicarEditar(livro) {
     setLivroSelecionado(livro);
     setModalAberto("editar");
-  };
+  }
 
-  const fecharModal = () => {
+  function fecharModal() {
     setModalAberto(null);
     setLivroSelecionado(null);
-  };
+  }
 
-  const salvarEFechar = () => {
+  function salvarEFechar() {
     fecharModal();
-    fetchLivros();
-  };
+    buscarLivros();
+  }
 
   return (
     <div className="min-h-screen bg-gray-300 pb-20">
@@ -59,22 +58,17 @@ function App() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
-        {livros.map((livro) => (
-          <CardLivro
-            key={livro.id}
-            livro={livro}
-            onClickCard={handleClickCard}
-            onClickEditar={handleClickEditar}
-          />
-        ))}
-        {modalAberto === "editar" && livroSelecionado && (
-        <ModalEditar
-          livro={livroSelecionado}
-          onFechar={fecharModal}
-          onSalvar={salvarEFechar}
-        />
-      )}
-    </div>
+        {livros.map(function(livro) {
+          return (
+            <CardLivro
+              key={livro.id}
+              livro={livro}
+              clicarCard={clicarCard}
+              clicarEditar={clicarEditar}
+            />
+          );
+        })}
+      </div>
 
       {livros.length === 0 && !erro && (
         <p className="text-center text-gray-600 mt-10 text-lg">
@@ -82,21 +76,28 @@ function App() {
         </p>
       )}
 
-      <BotaoAdicionar onClick={() => setModalAberto("adicionar")} />
+      <BotaoAdicionar onClick={function() { setModalAberto("adicionar") }} />
 
-      {/* Modais */}
       {modalAberto === "adicionar" && (
-        <ModalAdicionar onFechar={fecharModal} onSalvar={salvarEFechar} />
+        <ModalAdicionar aoFechar={fecharModal} aoSalvar={salvarEFechar} />
       )}
 
       {modalAberto === "detalhes" && livroSelecionado && (
         <ModalDetalhes
           livro={livroSelecionado}
-          onFechar={fecharModal}
-          onEditar={(livro) => {
+          aoFechar={fecharModal}
+          aoEditar={function(livro) {
             setLivroSelecionado(livro);
             setModalAberto("editar");
           }}
+        />
+      )}
+
+      {modalAberto === "editar" && livroSelecionado && (
+        <ModalEditar
+          livro={livroSelecionado}
+          aoFechar={fecharModal}
+          aoSalvar={salvarEFechar}
         />
       )}
     </div>
