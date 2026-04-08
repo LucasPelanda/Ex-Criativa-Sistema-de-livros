@@ -14,7 +14,7 @@ export const getLivros = (_, res) => {
 
     return res.status(200).json(livros);
   } catch (err) {
-    return res.status(500).json({ error: "mais erro mano" });
+    return res.status(500).json({ error: "Erro ao carregar livros." });
   }
 };
 
@@ -37,7 +37,7 @@ export const getLivro = (req, res) => {
 
     return res.status(200).json(livro);
   } catch (err) {
-    return res.status(500).json({ error: "mais erro mano" });
+    return res.status(500).json({ error: "Erro ao carregar livro." });
   }
 };
 

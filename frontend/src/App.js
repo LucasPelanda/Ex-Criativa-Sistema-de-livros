@@ -15,7 +15,7 @@ function App() {
 
   async function buscarLivros() {
     try {
-      var res = await axios.get("http://localhost:8800/livros");
+      const res = await axios.get("http://localhost:8800/livros");
       setLivros(res.data);
       setErro("");
     } catch (err) {
