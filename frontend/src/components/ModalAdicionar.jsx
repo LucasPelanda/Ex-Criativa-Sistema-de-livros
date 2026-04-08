@@ -50,12 +50,16 @@ function ModalAdicionar(props) {
 
         <input name="titulo" value={form.titulo} onChange={Escrita} placeholder="Título"
           className="w-full border-b border-gray-300 p-2 mb-3 outline-none" />
+
         <input name="autor" value={form.autor} onChange={Escrita} placeholder="Autor"
           className="w-full border-b border-gray-300 p-2 mb-3 outline-none" />
+
         <input name="genero" value={form.genero} onChange={Escrita} placeholder="Gênero"
           className="w-full border-b border-gray-300 p-2 mb-3 outline-none" />
+
         <input name="totalPaginas" value={form.totalPaginas} onChange={Escrita} placeholder="Número de páginas" type="number"
           className="w-full border-b border-gray-300 p-2 mb-3 outline-none" />
+          
         <select name="status" value={form.status} onChange={Escrita}
           className="w-full border-b border-gray-300 p-2 mb-6 outline-none">
           <option value="Quero Ler">Quero Ler</option>

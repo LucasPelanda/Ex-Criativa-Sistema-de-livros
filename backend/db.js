@@ -7,7 +7,6 @@ const __dirname = path.dirname(__filename);
 
 const db = new Database(path.join(__dirname, "database.db"));
 
-// Habilita chaves estrangeiras (importante pro relacionamento entre tabelas)
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 

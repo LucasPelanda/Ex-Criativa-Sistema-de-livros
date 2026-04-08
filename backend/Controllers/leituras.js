@@ -1,6 +1,6 @@
 import db from "../db.js";
 
-// GET - Listar leituras de um livro
+// GET 
 export const getLeituras = (req, res) => {
   try {
     const livro = db.prepare("SELECT id FROM livros WHERE id = ?").get(req.params.livroId);
